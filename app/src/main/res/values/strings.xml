@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Glass Launcher</string>
+    <string name="accessibility_label">Glass Launcher: кнопка Home</string>
+    <string name="accessibility_description">Перехватывает кнопку Home и кнопки приложений на пульте, чтобы открывать Glass Launcher вместо стокового лаунчера Google TV. Также может управлять громкостью (короткое нажатие - шаг, удержание 2 с - выключить звук). Содержимое экранов и вводимый текст не читаются.</string>
+</resources>

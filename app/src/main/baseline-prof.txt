@@ -1,0 +1,4 @@
+# Профиль запуска: Android заранее компилирует весь код лаунчера (AOT) при установке,
+# а не интерпретирует его на первых запусках. Устанавливается androidx.profileinstaller.
+HSPLdev/glasslauncher/tv/**;->**(**)**
+Ldev/glasslauncher/tv/**;
