@@ -225,7 +225,11 @@ fun HomeScreen(
         // --- что показывать в Top Shelf (с небольшим debounce, чтобы не мигать при быстрой навигации) ---
         // Как в tvOS: верхняя зона реагирует только на док; в сетке фон замирает размытым.
         var shelf by remember { mutableStateOf<ShelfContent>(ShelfContent.WallpaperShelf) }
-        LaunchedEffect(layout, settings.shelfMode) {
+        // Живые обои выбирают, чтобы их видеть: с ними верхняя зона всегда показывает ролик,
+        // а режим «баннер в фокусе» действует только для неподвижных обоев.
+        val showAppBanners = settings.shelfMode == ShelfMode.FOCUSED_APP && wallpaper.video == null
+        LaunchedEffect(layout, showAppBanners) {
+            if (!showAppBanners) shelf = ShelfContent.WallpaperShelf
             snapshotFlow { focus.focusedKey }
                 .debounce(120)
                 .collect { key ->
@@ -233,7 +237,7 @@ fun HomeScreen(
                     val inTop = row == null || (currentLayout.rowLazyIndex.getOrNull(row) ?: 0) <= 1
                     if (!inTop) return@collect
                     val app = key?.let { currentLayout.apps[it] }
-                    shelf = if (settings.shelfMode == ShelfMode.FOCUSED_APP && app != null) {
+                    shelf = if (showAppBanners && app != null) {
                         ShelfContent.AppShelf(app.image(AppImage.Kind.SHELF), app.label)
                     } else {
                         ShelfContent.WallpaperShelf
